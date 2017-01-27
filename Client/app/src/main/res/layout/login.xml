@@ -35,7 +35,7 @@
             android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
             android:inputType="textPassword"
-            android:hint="login"/>
+            android:hint="password"/>
         <Button
             android:id="@+id/login_submit"
             android:layout_width="100dp"
@@ -46,5 +46,12 @@
             android:background="#32CD32"
             android:layout_below="@id/password"
             android:onClick="submitLogin"/>
+        <TextView
+            android:id="@+id/errormsg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/login_submit"
+            android:textColor="#FF0000"/>
     </RelativeLayout>
 </LinearLayout>
