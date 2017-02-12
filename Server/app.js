@@ -21,6 +21,14 @@ app.post('/signup', rest.CreateUser);
 
 app.post('/login', rest.LoginUser);
 
+app.get('/songs', rest.GetTopSong);
+
+app.get('/songs/:userid', rest.GetUserSongs);
+
+app.post('/songs/:userid', rest.AddUserSongs)
+
+app.post('/users/:groupid', rest.JoinGroup)
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
