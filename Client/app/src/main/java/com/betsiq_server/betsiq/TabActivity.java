@@ -1,5 +1,6 @@
 package com.betsiq_server.betsiq;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,6 +20,9 @@ import android.widget.TextView;
 
 import com.betsiq_server.betsiq.Adapters.TabAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TabActivity extends AppCompatActivity {
 
 
@@ -32,20 +36,21 @@ public class TabActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-//        tabLayout.addTab(tabLayout.newTab().setText("Top 100"));
-//        tabLayout.addTab(tabLayout.newTab().setText("My List"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Groups"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Money"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Settings"));
-        String[] tabTitles = new String[]{"Top 100", "My List", "Groups", "Earn Money", "Settings"};
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), tabTitles);
-        mViewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(mViewPager);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        String[] tabTitles = new String[]{"Top 100", "My List", "Groups", "Earn Money", "Settings"};
+//        mViewPager = (ViewPager) findViewById(R.id.container);
+//        List<Fragment> frags = new ArrayList<Fragment>();
+//        frags.add(new topHundred());
+//        frags.add(new myList());
+//        frags.add(new Groups());
+//        frags.add(new earnMoney());
+//        frags.add(new Settings());
+//        TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), tabTitles, frags);
+//        mViewPager.setAdapter(adapter);
+//        tabLayout.setupWithViewPager(mViewPager);
     }
 
 
@@ -71,4 +76,10 @@ public class TabActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//
+//    public void GoToTopHundred(View view){
+//        Intent startIntent = new Intent(this, topHundred.class);
+//        startIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(startIntent);
+//    }
 }

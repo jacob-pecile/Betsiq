@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+>
+    <LinearLayout
+        android:id="@+id/songs_wrapper"
         android:layout_width="match_parent"
+        android:layout_height="550dp">
+        <ListView
+            android:id="@+id/songs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="#FFFFFF"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="you can see top 100 here"
-        android:textSize="12pt"/>
-    <ListView
-        android:id="@+id/songs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
-</LinearLayout>
+        android:layout_below="@id/songs_wrapper"
+        android:textColor="#FFFFFF"
+        android:background="#000000"
+        android:layout_alignParentRight="true"
+        android:onClick="SaveChoices"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="5dp"
+        android:text="Save"/>
+    <RelativeLayout
+        android:id="@+id/rl_footer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+            <include layout="@layout/mainmenu"
+                android:id="@+id/footer"/>
+    </RelativeLayout>
+</RelativeLayout>

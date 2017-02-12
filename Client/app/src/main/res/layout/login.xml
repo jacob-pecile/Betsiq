@@ -32,10 +32,20 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/username"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="25dp"
             android:layout_centerHorizontal="true"
             android:inputType="textPassword"
             android:hint="password"/>
+        <EditText
+            android:id="@+id/confirm"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/password"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:inputType="textPassword"
+            android:visibility="invisible"
+            android:hint="confirm password"/>
         <Button
             android:id="@+id/login_submit"
             android:layout_width="100dp"
@@ -44,7 +54,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:background="#32CD32"
-            android:layout_below="@id/password"
+            android:layout_below="@id/confirm"
             android:onClick="submitLogin"/>
         <TextView
             android:id="@+id/errormsg"

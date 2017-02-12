@@ -9,11 +9,13 @@ public class Song {
     private int rank;
     private String title;
     private String artist;
+    private boolean selected;
 
     public Song (int rank, String title, String artist){
         this.rank = rank;
         this.title = title;
         this.artist = artist;
+        this.selected = false;
     }
 
     public int getRank() {
@@ -40,5 +42,12 @@ public class Song {
         this.artist = artist;
     }
 
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
 }
