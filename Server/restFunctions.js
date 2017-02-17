@@ -11,7 +11,6 @@ var billboard = require("billboard-top-100").getChart;
 //RESTful functions go here
 module.exports = {
   CreateUser: function (req, res) {
-  	console.log("made it!!!");
     console.log(req.body);
     db.find({ name: req.body.name}, function (err, docs) {
     	if (docs.length == 0){
@@ -27,9 +26,11 @@ module.exports = {
 	});
   },
   LoginUser: function (req, res) {
+  	console.log(req.body);
     db.find({ name: req.body.name, password: req.body.password }, function (err, docs) {
   		if (docs.length > 0){
   			console.log("200");
+  			console.log(docs[0]);
   			res.json(docs[0]);
   		}else{
   			console.log("404");
@@ -63,7 +64,7 @@ module.exports = {
   },
 
   AddUserSongs: function (req, res){
-  	db.update({_id: req.params.userid}, {req.body.songs} ,{}, function(){
+  	db.update({_id: req.params.userid}, {songs:req.body.songs} ,{}, function(){
 	    res.sendStatus(200)
 	});
   }

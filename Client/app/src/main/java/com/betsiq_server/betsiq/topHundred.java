@@ -13,7 +13,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.betsiq_server.betsiq.Adapters.topSongAdapter;
+import com.betsiq_server.betsiq.CoreClasses.Constants;
 import com.betsiq_server.betsiq.CoreClasses.Song;
+import com.betsiq_server.betsiq.CoreClasses.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,8 @@ public class topHundred extends MenuActivity{
         currentPage.setEnabled(false);
 
         ListView topSongs = (ListView)findViewById(R.id.songs);
+
+        String user = Constants.GetSharedPrefrences(getApplicationContext(), getResources().getString(R.string.USER));
 
         List<Song> Songs =  new ArrayList<Song>();
         Songs.add(new Song(1, "Song 1", "Artist 1"));

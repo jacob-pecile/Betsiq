@@ -1,6 +1,7 @@
 package com.betsiq_server.betsiq;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import static com.betsiq_server.betsiq.APIs.UserAPI.ConfirmUserAPI;
 import static com.betsiq_server.betsiq.APIs.UserAPI.CreateUserAPI;
 
 /**
@@ -35,30 +37,65 @@ public class Login extends Activity {
     }
 
     public void submitLogin(View view){
-        EditText username = (EditText)findViewById(R.id.username);
-        EditText password = (EditText)findViewById(R.id.password);
+        final String username = ((EditText)findViewById(R.id.username)).getText().toString();
+        final String password = ((EditText)findViewById(R.id.password)).getText().toString();
+        final boolean[] result = {false};
 
         TextView error = (TextView)findViewById(R.id.errormsg);
 
         if (signup){
-            EditText confirm = (EditText)findViewById(R.id.confirm);
-            if (password.getText().toString().equals(confirm.getText().toString())) {
+            String confirm = ((EditText)findViewById(R.id.confirm)).getText().toString();
+            if (password.equals(confirm)) {
                 //TODO: make CREATE request
-                CreateUserAPI(username.getText().toString(), password.getText().toString());
+                Runnable createUser = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            result[0] = CreateUserAPI(getApplicationContext(), username, password);
+                        } catch (Exception ex) {
+                            //handle error which cannot be thrown back
+                        }
+                    }
+                };
+                Thread create = new Thread(createUser, "ServiceThread");
+                create.start();
+                try {
+                    create.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }else{
                 error.setText("Confirm password doesn't match password");
             }
         }else{
             //TODO: make POST request
+            Runnable createUser = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        result[0] = ConfirmUserAPI(getApplicationContext(), username, password);
+                    } catch (Exception ex) {
+                        //handle error which cannot be thrown back
+                    }
+                }
+            };
+            Thread create = new Thread(createUser, "ServiceThread");
+            create.start();
+            try {
+                create.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-//        if (username.getText().toString().equals("admin") && password.getText().toString().equals("test")){
-//            Intent startIntent = new Intent(this, topHundred.class);
-//            startIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(startIntent);
-//        }else{
-//
-//            error.setText("Please enter acceptable username and password");
-//        }
+        if (result[0]){
+            Intent startIntent = new Intent(this, topHundred.class);
+            startIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startIntent);
+        }else{
+
+            error.setText(signup ? "That username is already taken": "Please enter an acceptable username and password");
+        }
     }
 }

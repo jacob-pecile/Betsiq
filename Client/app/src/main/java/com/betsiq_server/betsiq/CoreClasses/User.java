@@ -6,10 +6,12 @@ package com.betsiq_server.betsiq.CoreClasses;
 
 public class User {
 
+    private String id = null;
     private String Name;
     private String Email;
 
     public User(String name, String email){
+        this.id = null;
         this.Name = name;
         this.Email = email;
     }
