@@ -57,6 +57,8 @@ public class topSongAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        final boolean songView = parent.getId() == R.id.songs;
         View view = convertView;
 
         // re-use an existing view, if one is available
@@ -76,30 +78,27 @@ public class topSongAdapter extends BaseAdapter {
         artist.setText(item.getArtist());
 
         CheckBox selected = (CheckBox) view.findViewById(R.id.selected);
-        if (parent.getId() == R.id.songs) {
-            final int pos = position;
-            selected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SelectSong(v, pos);
-                }
-            });
-        }else if (parent.getId() == R.id.my_songs){
-            selected.setVisibility(View.GONE);
-        }
+
+        final int pos = position;
+        selected.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectSong(v, pos, songView);
+            }
+        });
 
 
         return view;
     }
 
-    public void SelectSong(View view, int position) {
+    public void SelectSong(View view, int position, boolean songView) {
         CheckBox check = ((CheckBox)view);
         Song song = (Song)getItem(position);
 
         boolean checked = check.isChecked();
         numChecked = checked ? numChecked+1: numChecked-1;
 
-        if (numChecked > 10){
+        if (songView && numChecked > 10){
             check.setChecked(false);
             song.setSelected(false);
             numChecked = 10;

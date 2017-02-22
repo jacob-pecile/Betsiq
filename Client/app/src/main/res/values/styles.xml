@@ -20,4 +20,9 @@
         <item name="colorAccent">#32CD32</item>
         <item name="android:textColorSecondary">#000000</item>
     </style>
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#32CD32</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
 </resources>

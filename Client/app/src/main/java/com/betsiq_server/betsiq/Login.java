@@ -43,15 +43,46 @@ public class Login extends Activity {
 
         TextView error = (TextView)findViewById(R.id.errormsg);
 
-        if (signup){
-            String confirm = ((EditText)findViewById(R.id.confirm)).getText().toString();
-            if (password.equals(confirm)) {
-                //TODO: make CREATE request
+        //used for testing purposes
+        if (username.equals("admin") && password.equals("test")){
+            Intent startIntent = new Intent(this, topHundred.class);
+            startIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startIntent);
+            finish();
+        }else {
+
+            if (signup) {
+                String confirm = ((EditText) findViewById(R.id.confirm)).getText().toString();
+                if (password.equals(confirm)) {
+                    //TODO: make CREATE request
+                    Runnable createUser = new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                result[0] = CreateUserAPI(getApplicationContext(), username, password);
+                            } catch (Exception ex) {
+                                //handle error which cannot be thrown back
+                            }
+                        }
+                    };
+                    Thread create = new Thread(createUser, "ServiceThread");
+                    create.start();
+                    try {
+                        create.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    error.setText("Confirm password doesn't match password");
+                }
+            } else {
+                //TODO: make POST request
                 Runnable createUser = new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            result[0] = CreateUserAPI(getApplicationContext(), username, password);
+                            result[0] = ConfirmUserAPI(getApplicationContext(), username, password);
                         } catch (Exception ex) {
                             //handle error which cannot be thrown back
                         }
@@ -64,38 +95,16 @@ public class Login extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-            }else{
-                error.setText("Confirm password doesn't match password");
             }
-        }else{
-            //TODO: make POST request
-            Runnable createUser = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        result[0] = ConfirmUserAPI(getApplicationContext(), username, password);
-                    } catch (Exception ex) {
-                        //handle error which cannot be thrown back
-                    }
-                }
-            };
-            Thread create = new Thread(createUser, "ServiceThread");
-            create.start();
-            try {
-                create.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+            if (result[0]) {
+                Intent startIntent = new Intent(this, topHundred.class);
+                startIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(startIntent);
+            } else {
+
+                error.setText(signup ? "That username is already taken" : "Please enter an acceptable username and password");
             }
-        }
-
-        if (result[0]){
-            Intent startIntent = new Intent(this, topHundred.class);
-            startIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(startIntent);
-        }else{
-
-            error.setText(signup ? "That username is already taken": "Please enter an acceptable username and password");
         }
     }
 }

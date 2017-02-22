@@ -2,12 +2,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/header"
+    <!--<LinearLayout-->
+        <!--android:id="@+id/filterTab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+        <!--<Button-->
+            <!--android:id="@+id/placeholder"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="filter buttons go here"/>-->
+    <!--</LinearLayout>-->
+    <LinearLayout
+        android:id="@+id/filters"
         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:onClick="openFilters">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/filter"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Filters"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/cancelFilter"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:onClick="openFilters">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/filter"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Filters"/>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/grouplist"
+        android:layout_below="@id/filters"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You can join pools here"
-        android:textSize="12pt"/>
+        android:padding="15dp"
+        android:background="#FFFFFF" />
     <RelativeLayout
         android:id="@+id/rl_footer"
         android:layout_width="fill_parent"
