@@ -1,5 +1,7 @@
 package com.betsiq_server.betsiq.CoreClasses;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by Jacob on 27/01/2017.
  */
@@ -9,7 +11,11 @@ public class Song {
     private int rank;
     private String title;
     private String artist;
+    private String cover;
     private boolean selected;
+
+    //@JsonIgnoreProperties(ignoreUnknown = true)
+    public Song(){}
 
     public Song (int rank, String title, String artist){
         this.rank = rank;

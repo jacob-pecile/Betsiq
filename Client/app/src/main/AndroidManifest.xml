@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Login">
         </activity>
-        <activity android:name=".SignUp" android:label="SignUp">
+        <activity android:name=".SignUp" android:label="Trendy Tunes">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -20,27 +20,24 @@ public class SongAPI {
 
     private static String server = "http://192.168.0.49:3000";
 
-    public static boolean GetTopSongsAPI(Context context){
+    public static String GetTopSongsAPI(Context context){
 
         HttpURLConnection connection = null;
         try {
 
             URL url = new URL(server +"/songs");
             connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
+            connection.setRequestMethod("GET");
+//            connection.setRequestProperty("Content-Type",
+//                    "application/x-www-form-urlencoded");
 
             connection.setUseCaches (false);
             connection.setDoInput(true);
-            connection.setDoOutput(true);
             connection.setRequestProperty("Content-Language", "en-US");
 
-            //OutputStream os = connection.getOutputStream();
-
-            //os.write(outputBytes);
-
             connection.connect();
+
+            int test = connection.getResponseCode();
 
             if (connection.getResponseCode()== HttpURLConnection.HTTP_OK){
                 StringBuffer sb = new StringBuffer();
@@ -51,11 +48,43 @@ public class SongAPI {
                     sb.append(inputLine);
                 }
                 String result = sb.toString();
-                Constants.SetSharedPrefrences(context, "songs", result);
-                return true;
+                return result;
             }else{
-                return false;
+                return null;
             }
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    public static boolean SelectSongsAPI(Context context, String songs, String userid){
+
+        String parameters = "songs=" + songs;
+
+        HttpURLConnection connection = null;
+        try {
+
+            URL url = new URL(server +"/songs/" + userid);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
+
+            connection.setUseCaches (false);
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Language", "en-US");
+
+            //connection.setRequestProperty("Content-Length", "" + Integer.toString(parameters.getBytes().length));
+            byte[] outputBytes = parameters.getBytes("UTF-8");
+            connection.setRequestProperty("Content-Length", Integer.toString(outputBytes.length));
+            OutputStream os = connection.getOutputStream();
+
+            os.write(outputBytes);
+
+            connection.connect();
+
+            return connection.getResponseCode()== HttpURLConnection.HTTP_OK;
         }catch (Exception e){
             return false;
         }

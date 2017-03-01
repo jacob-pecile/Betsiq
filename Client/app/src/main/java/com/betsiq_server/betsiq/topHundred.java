@@ -16,10 +16,19 @@ import com.betsiq_server.betsiq.Adapters.topSongAdapter;
 import com.betsiq_server.betsiq.CoreClasses.Constants;
 import com.betsiq_server.betsiq.CoreClasses.Song;
 //import com.betsiq_server.betsiq.CoreClasses.User;
-//import com.fasterxml.jackson.databind.ObjectMapper;
+import com.betsiq_server.betsiq.CoreClasses.User;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.Console;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.betsiq_server.betsiq.APIs.SongAPI.GetTopSongsAPI;
+import static com.betsiq_server.betsiq.APIs.SongAPI.SelectSongsAPI;
+import static com.betsiq_server.betsiq.APIs.UserAPI.ConfirmUserAPI;
 
 /**
  * Created by Jacob on 27/01/2017.
@@ -28,11 +37,13 @@ import java.util.List;
 public class topHundred extends MenuActivity{
 
     private topSongAdapter _adapter;
+    private ObjectMapper mapper = new ObjectMapper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tophundred);
+        final String[] result = {""};
 
         View footer = findViewById(R.id.footer);
         Button currentPage = (Button)footer.findViewById(R.id.menu_hundred);
@@ -41,13 +52,33 @@ public class topHundred extends MenuActivity{
 
         ListView topSongs = (ListView)findViewById(R.id.songs);
 
-        String user = Constants.GetSharedPrefrences(getApplicationContext(), getResources().getString(R.string.USER));
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        List<Song> Songs =  new ArrayList<Song>();
-        Songs.add(new Song(1, "Song 1", "Artist 1"));
-        Songs.add(new Song(2, "Song 2", "Artist 2"));
-        Songs.add(new Song(3, "Song 3", "Artist 3"));
-
+        //GET top 100 songs
+        Runnable getSongs = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    result[0] = GetTopSongsAPI(getApplicationContext());
+                } catch (Exception ex) {
+                    //handle error which cannot be thrown back
+                }
+            }
+        };
+        Thread top100 = new Thread(getSongs, "ServiceThread");
+        top100.start();
+        try {
+            top100.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        List<Song> Songs;
+        try {
+            Songs = mapper.readValue(result[0], new TypeReference<List<Song>>() {
+            });
+        } catch (IOException e){
+            Songs = null;
+        }
         _adapter = new topSongAdapter(this, Songs);
         topSongs.setAdapter(_adapter);
     }
@@ -57,8 +88,31 @@ public class topHundred extends MenuActivity{
     }
 
     public void SaveChoices(View v){
-        _adapter.getSelectedSongs();
-        //TODO: POST selected songs
+        final boolean[] result = {false};
+
+        String user_str = Constants.GetSharedPrefrences(getApplicationContext(), getResources().getString(R.string.USER));
+        try {
+            User user = mapper.readValue(user_str, User.class);
+            final String id = user.getId();
+
+            final String songs = mapper.writeValueAsString(_adapter.getSelectedSongs());
+            //TODO: POST selected songs
+            Runnable postSongs = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        result[0] = SelectSongsAPI(getApplicationContext(),songs ,id);
+                    } catch (Exception ex) {
+                        //handle error which cannot be thrown back
+                    }
+                }
+            };
+            Thread top100picks = new Thread(postSongs, "ServiceThread");
+            top100picks.start();
+            top100picks.join();
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         makeToast("Selected songs saved");
     }

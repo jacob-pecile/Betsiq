@@ -54,7 +54,7 @@ public class Login extends Activity {
             if (signup) {
                 String confirm = ((EditText) findViewById(R.id.confirm)).getText().toString();
                 if (password.equals(confirm)) {
-                    //TODO: make CREATE request
+                    //make CREATE request
                     Runnable createUser = new Runnable() {
                         @Override
                         public void run() {
@@ -77,7 +77,7 @@ public class Login extends Activity {
                     error.setText("Confirm password doesn't match password");
                 }
             } else {
-                //TODO: make POST request
+                //make POST request
                 Runnable createUser = new Runnable() {
                     @Override
                     public void run() {

@@ -6,12 +6,14 @@ package com.betsiq_server.betsiq.CoreClasses;
 
 public class User {
 
-    private String id = null;
+    private String _id;
     private String Name;
     private String Email;
 
-    public User(String name, String email){
-        this.id = null;
+    public User(){}
+
+    public User(String name, String email, String id){
+        this._id = id;
         this.Name = name;
         this.Email = email;
     }
@@ -30,5 +32,13 @@ public class User {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        this._id = id;
     }
 }

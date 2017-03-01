@@ -78,6 +78,7 @@ public class topSongAdapter extends BaseAdapter {
         artist.setText(item.getArtist());
 
         CheckBox selected = (CheckBox) view.findViewById(R.id.selected);
+        selected.setChecked(item.isSelected());
 
         final int pos = position;
         selected.setOnClickListener(new View.OnClickListener() {

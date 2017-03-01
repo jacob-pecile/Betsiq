@@ -64,7 +64,10 @@ module.exports = {
   },
 
   AddUserSongs: function (req, res){
+  	console.log("adding!!!!!");
+  	console.log(req.params.userid);
   	db.update({_id: req.params.userid}, {songs:req.body.songs} ,{}, function(){
+  		console.log("added");
 	    res.sendStatus(200)
 	});
   }
