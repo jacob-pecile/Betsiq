@@ -1,1 +1,2 @@
-{"name":"q","password":"q","_id":"WDFEnNXWCo1Z9BZD","createdAt":{"$$date":1487879582302},"updatedAt":{"$$date":1487879582302}}
+{"name":"q","password":"q","songs":[],"groupid":"0","_id":"kGdJZawL8ZFXupgC","createdAt":{"$$date":1489278736343},"updatedAt":{"$$date":1489278736343}}
+{"name":"q","password":"q","songs":[{"artist":"Ed Sheeran","rank":1,"selected":true,"title":"Shape Of You"},{"artist":"Migos Featuring Lil Uzi Vert","rank":2,"selected":true,"title":"Bad And Boujee"},{"artist":"Zayn / Taylor Swift","rank":3,"selected":true,"title":"I Don't Wanna Live Forever (Fifty Shades Darker)"}],"groupid":"0","_id":"kGdJZawL8ZFXupgC","createdAt":{"$$date":1489278736343},"updatedAt":{"$$date":1489278742170}}

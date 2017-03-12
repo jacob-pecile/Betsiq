@@ -8,12 +8,18 @@ var db = new Datastore({
 
 var billboard = require("billboard-top-100").getChart;
 
+var decode = require('decode-html');
+
 //RESTful functions go here
 module.exports = {
   CreateUser: function (req, res) {
     console.log(req.body);
-    db.find({ name: req.body.name}, function (err, docs) {
+    var user = req.body;
+    db.find({ name: user.name}, function (err, docs) {
     	if (docs.length == 0){
+    		//initialize variables
+    		user.songs = [];
+    		user.groupid = "0";
 		    db.insert(req.body, function(err, user) {
 			    if (err) res.send(err);
 			    res.json(user);
@@ -64,10 +70,10 @@ module.exports = {
   },
 
   AddUserSongs: function (req, res){
-  	console.log("adding!!!!!");
+  	//TODO: fix ampersand problem
   	console.log(req.params.userid);
-  	db.update({_id: req.params.userid}, {songs:req.body.songs} ,{}, function(){
-  		console.log("added");
+  	db.update({_id: req.params.userid}, { $set :{"songs":JSON.parse(req.body.songs)}} ,{upsert:false}, function(){
+  		console.log("added!!!");
 	    res.sendStatus(200)
 	});
   }

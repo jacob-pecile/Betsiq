@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.betsiq_server.betsiq.Adapters.topSongAdapter;
 import com.betsiq_server.betsiq.CoreClasses.Constants;
 import com.betsiq_server.betsiq.CoreClasses.Song;
-//import com.betsiq_server.betsiq.CoreClasses.User;
 import com.betsiq_server.betsiq.CoreClasses.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;

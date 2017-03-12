@@ -51,7 +51,7 @@ public class UserAPI{
             OutputStream os = connection.getOutputStream();
 
             os.write(outputBytes);
-
+            os.close();
             connection.connect();
 
             if (connection.getResponseCode()== HttpURLConnection.HTTP_OK){
@@ -97,7 +97,7 @@ public class UserAPI{
             OutputStream os = connection.getOutputStream();
 
             os.write(outputBytes);
-
+            os.close();
             connection.connect();
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){

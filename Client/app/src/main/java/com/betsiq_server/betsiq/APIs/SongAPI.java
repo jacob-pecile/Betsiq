@@ -1,8 +1,11 @@
 package com.betsiq_server.betsiq.APIs;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.betsiq_server.betsiq.CoreClasses.Constants;
+
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -11,7 +14,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 /**
  * Created by Jacob on 22/02/2017.
  */
@@ -67,8 +69,7 @@ public class SongAPI {
             URL url = new URL(server +"/songs/" + userid);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
             connection.setUseCaches (false);
             connection.setDoInput(true);
@@ -81,6 +82,7 @@ public class SongAPI {
             OutputStream os = connection.getOutputStream();
 
             os.write(outputBytes);
+            os.close();
 
             connection.connect();
 

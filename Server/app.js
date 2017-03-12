@@ -9,7 +9,7 @@ var  bodyParser = require('body-parser'); // Middleware to read POST data
 app.use(bodyParser.json());
 // To parse form data:
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: false
 }));
 
 // respond with "hello world" when a GET request is made to the homepage
