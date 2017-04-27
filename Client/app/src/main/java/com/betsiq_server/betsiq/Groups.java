@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,19 @@ public class Groups extends MenuActivity {
                 //TODO: validation on min and max
                 String min = ((EditText)filters.findViewById(R.id.min)).getText().toString();
                 String max = ((EditText)filters.findViewById(R.id.max)).getText().toString();
+
+                // Empty
+                if (min.isEmpty() || max.isEmpty()){
+
+                }
+
+                // Range
+                int minFee = Integer.parseInt(min);
+                int maxFee = Integer.parseInt(max);
+
+                if (minFee < 10 || maxFee > 10000){
+
+                }
 
                 RadioGroup radioButtonGroup = (RadioGroup)filters.findViewById(R.id.sortGroup);
                 final int radioButtonID = radioButtonGroup.getCheckedRadioButtonId();
